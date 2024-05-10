@@ -1,0 +1,11 @@
+{
+  "name": "greythr",
+  "version": "1.0.0",
+  "description": "This is a portal for greythr to track attendance and complete whole HR work",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "abnjain",
+  "license": "ISC"
+}

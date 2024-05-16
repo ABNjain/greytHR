@@ -10,6 +10,6 @@ app.get("/", (req, res)=>{
     res.send("Hello to the API");
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`Server is running on http://localhost:${process.env.PORT}`)
+app.listen(process.env.NODEPORT, () => {
+    console.log(`Server is running on http://localhost:${process.env.NODEPORT}`)
 });

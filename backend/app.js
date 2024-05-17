@@ -9,6 +9,9 @@ app.use(express.urlencoded({ extended: true }));
 app.get("/", (req, res)=>{
     res.send("Hello to the API");
 });
+app.get("/auth", (req, res) => {
+    res.send("Hi");
+});
 
 app.listen(process.env.NODEPORT, () => {
     console.log(`Server is running on http://localhost:${process.env.NODEPORT}`)

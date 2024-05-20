@@ -1,10 +1,18 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("https://127.0.0.1:27017/greytHR")
-.then(()=>{
-    console.log('mongodb connected')
-})
-.catch((err)=> console.log(err.message));
+const connectDB = async () => {
+    try {
+        await mongoose.connect("mongodb://127.0.0.1:27017/greytHR", {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        });
+        console.log('MongoDB connected');
+    } catch (err) {
+        console.error('Connection error', err.message);
+    }
+};
+
+connectDB();
 
 mongoose.connection
 .on('connected', ()=>{   //when mongoose connected

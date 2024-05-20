@@ -1,16 +1,17 @@
 const express = require("express");
+require('dotenv').config();
+const authRouter = require("./routes/auth");
+require("./config/mongoDB");
 
 const app = express();
-require('dotenv').config();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/auth', authRouter);
+
 app.get("/", (req, res)=>{
     res.send("Hello to the API");
-});
-app.get("/auth", (req, res) => {
-    res.send("Hi");
 });
 
 app.listen(process.env.NODEPORT, () => {

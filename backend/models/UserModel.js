@@ -7,6 +7,15 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  userimage: {
+    type: String,
+  },
+  dob: {
+    type: Date,
+  },
+  age: {
+    type: Number,
+  },
   email: {
     type: String,
     required: true,

@@ -5,9 +5,17 @@ const tokenBlacklist = require("../models/tokenBlacklist");
 
 module.exports = {
   register: async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, userimage, dob, age, email, password } = req.body;
     try {
-      const user = new User({ username, email, password });
+      let user = await User.findOne({ username: username }) 
+      if (user) {
+        throw new Error("Username already exists. If yours, try logging in");
+      } 
+      user = await User.findOne({ email: email });
+      if (user) {
+        throw new Error("Username already exists. If yours, try logging in");
+      }
+      user = new User({ username, userimage, dob, age, email, password });
       await user.save();
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
@@ -15,7 +23,8 @@ module.exports = {
 
       res.status(201).json({ token, msg: "User Registered"  });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      // res.status(500).json({ error: error.message });
+      next(error);
     }
   },
 

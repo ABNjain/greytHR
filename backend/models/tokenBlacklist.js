@@ -1,5 +1,3 @@
-// models/TokenBlacklist.js
-
 const mongoose = require('mongoose');
 
 const tokenBlacklistSchema = new mongoose.Schema({

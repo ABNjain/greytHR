@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel.js");
 const tokenBlacklist = require("../models/tokenBlacklist.js");
 
-module.exports = {
-  authenticateUser: async (req, res, next) => {
+module.exports = async (req, res, next) => {
     const authHeader = req.header("Authorization");
 
     if (!authHeader) {
@@ -32,7 +31,4 @@ module.exports = {
     } catch (error) {
       res.status(401).json({ msg: "Invalid token" });
     }
-  },
-
-  
-};
+  }

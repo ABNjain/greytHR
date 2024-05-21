@@ -2,8 +2,7 @@ const jwt = require("jsonwebtoken");
 const PAdmin = require("../models/PAdminModel.js");
 const tokenBlacklist = require("../models/tokenBlacklist.js");
 
-module.exports = {
-    authenticatePAdmin: async (req, res, next) => {
+module.exports = async (req, res, next) => {
     const authHeader = req.header("Authorization");
 
     if (!authHeader) {
@@ -33,4 +32,3 @@ module.exports = {
       res.status(401).json({ msg: "Invalid token" });
     }
   }
-}

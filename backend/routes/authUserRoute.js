@@ -6,6 +6,6 @@ const authenticateUser = require('../middlewares/authenticateUser');
 // Define the routes
 router.post('/register', register);
 router.post('/login', login);
-router.post('/logout', logout);
+router.post('/logout', authenticateUser, logout);
 
 module.exports = router;

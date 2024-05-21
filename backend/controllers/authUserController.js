@@ -13,7 +13,7 @@ module.exports = {
 
       console.log(`User registered: ${user.email}`);
 
-      res.status(201).json({ token });
+      res.status(201).json({ token, msg: "User Registered"  });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -39,7 +39,7 @@ module.exports = {
 
       console.log(`User logged in: ${user.email}`);
 
-      res.json({ token });
+      res.json({ token, msg: "User Loggedin" });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -52,7 +52,7 @@ module.exports = {
 
       console.log(`User logged out: ${req.user.email}`);
 
-      res.status(200).json({ msg: "Logged out successfully" });
+      res.status(200).json({ msg: "User Logged out successfully" });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

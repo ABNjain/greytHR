@@ -1,24 +1,15 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header className="AppHeader">
+        <h1>Welcome to greytHR Portal</h1>
+        <p><a href="http://localhost:3004/auth/user/login">Login</a> or <a href="http://localhost:3004/auth/user/register">Register</a></p>
+        <p>If Admin You Can Redirect To<br /><a href="http://localhost:3004/auth/admin/login">Admin Panel Login</a></p>  
       </header>
-    </div>
+    </>
   );
 }
 

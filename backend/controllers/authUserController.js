@@ -23,8 +23,8 @@ module.exports = {
 
       res.status(201).json({ token, msg: "User Registered"  });
     } catch (error) {
-      // res.status(500).json({ error: error.message });
-      next(error);
+      res.status(500).json({ error: error.message });
+      // next(error);
     }
   },
 

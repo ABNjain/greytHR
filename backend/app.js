@@ -1,11 +1,14 @@
 const express = require("express");
 const path = require('path');
+const cors = require("cors");
 require('dotenv').config();
+const corsOptions = require("./config/corsOptions"); 
 const authUserRouter = require("./routes/authUserRoute");
 const authPAdminRouter = require("./routes/authPAdminRoute");
 require("./config/mongoDB");
 
 const app = express();
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

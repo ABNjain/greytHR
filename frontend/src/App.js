@@ -1,16 +1,22 @@
 import './App.css';
 import React from 'react';
+// import WelcomePage from './components/WelcomePage.jsx';
+// import LoginPage from './components/LoginPage.jsx';
+import RegisterPage from './components/RegisterPage.jsx';
+// import HomePage from './components/HomePage.jsx';
 
 function App() {
   return (
     <>
-      <header className="AppHeader">
-        <h1>Welcome to greytHR Portal</h1>
-        <p><a href="http://localhost:3004/auth/user/login">Login</a> or <a href="http://localhost:3004/auth/user/register">Register</a></p>
-        <p>If Admin You Can Redirect To<br /><a href="http://localhost:3004/auth/admin/login">Admin Panel Login</a></p>  
-      </header>
+    <div>
+    {/* <WelcomePage /> */}
+    {/* <LoginPage /> */}
+    <RegisterPage />
+    {/* <HomePage /> */}
+    </div>
+      
     </>
-  );
+ );
 }
 
 export default App;

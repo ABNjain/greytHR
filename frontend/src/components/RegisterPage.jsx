@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 function RegisterPage() {
+  const [userName, setUserName] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -9,20 +10,22 @@ function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password
+      userName,
+      firstName,
+      lastName,
+      email,
+      password
     };
 
     try {
-      const response = await fetch('http://localhost:3004/auth/user/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-      });
+      console.log('Request payload:', userData);
+const response = await fetch('http://localhost:3004/auth/user/register', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+});
 
       if (response.ok) {
         console.log('Registration successful!');
@@ -45,6 +48,10 @@ function RegisterPage() {
           <div className='flex flex-col mt-5 items-center'>
             <p className='text-xl text-orange-400'>Submit Your login Details</p>
             <div className="details mt-5">
+              <h3>User Name</h3>
+              <input className='p-2 rounded-md' type="text" value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                required placeholder='abc' />
               <h3>First Name</h3>
               <input className='p-2 rounded-md' type="text" value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}

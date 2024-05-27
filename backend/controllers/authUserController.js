@@ -5,23 +5,25 @@ const tokenBlacklist = require("../models/tokenBlacklist");
 
 module.exports = {
   register: async (req, res) => {
-    const { username, firstName, lastName, userimage, dob, age, email, password } = req.body;
+    console.log('Request body:', req.body);
+
+    const { userName, firstName, lastName, userimage, dob, age, email, password } = req.body;
     try {
-      let user = await User.findOne({ username: username }) 
+      let user = await User.findOne({ userName: userName }) 
       if (user) {
         throw new Error("Username already exists. If yours, try logging in");
       } 
       user = await User.findOne({ email: email });
       if (user) {
-        throw new Error("Username already exists. If yours, try logging in");
+        throw new Error("User email already exists. If yours, try logging in");
       }
-      user = new User({ username, firstName, lastName, userimage, dob, age, email, password });
+      user = new User({ userName, firstName, lastName, userimage, dob, age, email, password });
       await user.save();
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
       console.log(`User registered: ${user.email}`);
 
-      res.status(201).json({ token, msg: "User Registered"  });
+      res.status(201).json({ token, msg: "User Registered"  }).redirect('./components/HomePage');;
     } catch (error) {
       res.status(500).json({ error: error.message });
       // next(error);
@@ -29,13 +31,13 @@ module.exports = {
   },
 
   login: async (req, res) => {
-    const { username, email, password } = req.body;
+    const { userName, email, password } = req.body;
     try {
       let user = await User.findOne({ email: email });
       
       // If not found, check if it's a username
       if (!user) {
-        user = await User.findOne({ username: username });
+        user = await User.findOne({ userName: userName });
       }
       if (!user) {
         return res.status(400).json({ msg: "Invalid credentials" });

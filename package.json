@@ -5,15 +5,15 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "frontend": "cd frontend && npm start",
-    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && nodemon start",
+    "backend": "cd backend && nodemon start",
     "dev": "concurrently \"npm run frontend\" \"npm run backend\""
   },
   "author": "abnjain",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "nodemon": "^3.1.0"
+    "nodemon": "^3.1.1"
   },
   "dependencies": {
     "bootstrap": "^5.3.3",

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const PAdminSchema = new mongoose.Schema({
-  adminname: {
+  adminName: {
     type: String,
     required: true,
     unique: true,

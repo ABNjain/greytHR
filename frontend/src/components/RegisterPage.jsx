@@ -93,14 +93,14 @@ function RegisterPage() {
 
       if (response.ok) {
         console.log('Registration successful!');
-        // Handle successful registration, such as redirecting to another page
+        
       } else {
         console.error('Registration failed:', response.statusText);
-        // Handle registration failure, display error message or retry registration
+        
       }
     } catch (error) {
       console.error('Error registering user:', error);
-      // Handle unexpected errors, display error message or retry registration
+      
     }
   };
 

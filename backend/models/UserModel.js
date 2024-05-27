@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
-  username: {
+  userName: {
     type: String,
     required: false,
     unique: true,
@@ -32,8 +32,9 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-  },
-});
+  },   
+}, { timestamps: true });
+
 
 UserSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
@@ -43,5 +44,13 @@ UserSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+// UserSchema.post('save', function(error, doc, next) {
+//   if (error.name === 'MongoError' && error.code === 11000) {
+//     next(new Error('There was a duplicate key error'));
+//   } else {
+//     next(error);
+//   }
+// });
 
 module.exports = mongoose.model('User', UserSchema);

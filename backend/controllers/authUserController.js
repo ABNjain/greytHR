@@ -5,52 +5,53 @@ const tokenBlacklist = require("../models/tokenBlacklist");
 
 module.exports = {
   register: async (req, res) => {
-    const { username, firstName, lastName, userimage, dob, age, email, password } = req.body;
+    const { userName, firstName, lastName, userimage, dob, age, email, password } = req.body;
     try {
-      let user = await User.findOne({ username: username }) 
+      let user = await User.findOne({ userName });
       if (user) {
-        throw new Error("Username already exists. If yours, try logging in");
-      } 
-      user = await User.findOne({ email: email });
-      if (user) {
-        throw new Error("Username already exists. If yours, try logging in");
+        return res.status(400).json({ error: "Username already exists. If yours, try logging in" });
       }
-      user = new User({ username, firstName, lastName, userimage, dob, age, email, password });
+
+      user = await User.findOne({ email });
+      if (user) {
+        return res.status(400).json({ error: "User email already exists. If yours, try logging in" });
+      }
+
+      user = new User({ userName, firstName, lastName, userimage, dob, age, email, password });
       await user.save();
+
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
       console.log(`User registered: ${user.email}`);
-
-      res.status(201).json({ token, msg: "User Registered"  });
+      res.status(201).json({ token, msg: "User Registered" });
     } catch (error) {
-      res.status(500).json({ error: error.message });
-      // next(error);
+      console.error("Error during registration:", error.message, error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
 
   login: async (req, res) => {
-    const { username, email, password } = req.body;
+    const { userName, email, password } = req.body;
     try {
-      let user = await User.findOne({ email: email });
-      
-      // If not found, check if it's a username
+      let user = await User.findOne({ email });
       if (!user) {
-        user = await User.findOne({ username: username });
+        user = await User.findOne({ userName });
       }
       if (!user) {
-        return res.status(400).json({ msg: "Invalid credentials" });
+        return res.status(400).json({ error: "Invalid credentials" });
       }
+
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ msg: "Invalid credentials" });
+        return res.status(400).json({ error: "Invalid credentials" });
       }
+
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-
       console.log(`User logged in: ${user.email}`);
-
-      res.json({ token, msg: "User Loggedin" });
+      res.json({ token, msg: "User Logged in" });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.error("Error during login:", error.message, error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
 
@@ -58,12 +59,11 @@ module.exports = {
     const token = req.token;
     try {
       await tokenBlacklist.create({ token });
-
       console.log(`User logged out: ${req.user.email}`);
-
       res.status(200).json({ msg: "User Logged out successfully" });
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      console.error("Error during logout:", error.message, error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   }
 };

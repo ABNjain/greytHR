@@ -5,9 +5,17 @@ const tokenBlacklist = require("../models/tokenBlacklist");
 
 module.exports = {
   register: async (req, res) => {
-    const { adminname, email, password } = req.body;
+    const { adminName, firstName, lastName, email, password } = req.body;
     try {
-      const padmin = new PAdmin({ adminname, email, password });
+      let padmin = await PAdmin.findOne({ adminName }) 
+      if (padmin) {
+        throw new Error("Username already exists. If yours, try logging in");
+      } 
+      padmin = await PAdmin.findOne({ email });
+      if (padmin) {
+        throw new Error("User email already exists. If yours, try logging in");
+      }
+      padmin = new PAdmin({ adminName, firstName, lastName, email, password });
       await padmin.save();
       const token = jwt.sign({ id: padmin._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
@@ -20,13 +28,13 @@ module.exports = {
   },
 
   login: async (req, res) => {
-    const { adminname, email, password } = req.body;
+    const { adminName, email, password } = req.body;
     try {
-      let padmin = await PAdmin.findOne({ email: email });
+      let padmin = await PAdmin.findOne({ email });
       
       // If not found, check if it's a username
       if (!padmin) {
-        padmin = await PAdmin.findOne({ adminname: adminname });
+        padmin = await PAdmin.findOne({ adminName });
       }
       if (!padmin) {
         return res.status(400).json({ msg: "Invalid credentials" });

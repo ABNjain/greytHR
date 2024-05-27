@@ -16,28 +16,28 @@ function RegisterPage() {
       email,
       password
     };
+console.log(userData);
+    // try {
+    //   console.log('Request payload:', userData);
+      await fetch('http://localhost:3004/auth/user/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+      });
 
-    try {
-      console.log('Request payload:', userData);
-const response = await fetch('http://localhost:3004/auth/user/register', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(userData)
-});
-
-      if (response.ok) {
-        console.log('Registration successful!');
-        // Handle successful registration, such as redirecting to another page
-      } else {
-        console.error('Registration failed:', response.statusText);
-        // Handle registration failure, display error message or retry registration
-      }
-    } catch (error) {
-      console.error('Error registering user:', error);
-      // Handle unexpected errors, display error message or retry registration
-    }
+      // if (response.ok) {
+      //   console.log('Registration successful!');
+      //   // Handle successful registration, such as redirecting to another page
+      // } else {
+      //   console.error('Registration failed:', response.statusText);
+      //   // Handle registration failure, display error message or retry registration
+      // }
+    // } catch (error) {
+    //   console.error('Error registering user:', error);
+    //   // Handle unexpected errors, display error message or retry registration
+    // }
   };
 
   return (

@@ -30,11 +30,11 @@ module.exports = {
   login: async (req, res) => {
     const { adminName, email, password } = req.body;
     try {
-      let padmin = await PAdmin.findOne({ email: email });
+      let padmin = await PAdmin.findOne({ email });
       
       // If not found, check if it's a username
       if (!padmin) {
-        padmin = await PAdmin.findOne({ adminname: adminName });
+        padmin = await PAdmin.findOne({ adminName });
       }
       if (!padmin) {
         return res.status(400).json({ msg: "Invalid credentials" });

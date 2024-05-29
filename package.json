@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "node": "^18.20.3"
+    "node": "^18.20.3",
+    "react-router-dom": "^6.23.1"
   }
 }

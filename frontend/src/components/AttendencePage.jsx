@@ -1,4 +1,5 @@
 import React from 'react';
+import Calendar from './A-Calendar';
 import { IoHome } from "react-icons/io5";
 import { FaHandHoldingUsd } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
@@ -11,13 +12,13 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-function HomePage() {
+function AttendencePage() {
   return (
     <>
 
       <div className="loginpage bg-gray-600 m-0 p-0 font-semibold relative">
-        <h1 className='text-3xl text-white'>Welcome to greytHR Portal</h1>
-        <div className="container flex gap-1 h-screen w-full">
+        <h1 className='text-3xl text-white flex justify-center pt-5 h-20'>Welcome to greytHR Portal</h1>
+        <div className="container flex h-screen w-full">
           <div className="first bg-white w-60">
             <div className="porfile bg-gray-100 text-black flex gap-1">
               <div className="logo text-3xl py-2"><FaUser /></div>
@@ -114,13 +115,16 @@ function HomePage() {
             </Menu>
           </div>
 
-          <div className="Second bg-red-500 w-full">Second</div>
-        </div>
+          <div className="Second bg-white border border-x-2 w-full">
+            <h1 className='text-gray-700 text-3xl pt-4'>Attendence Calendar</h1>
+            <div className="calender mt-3"><Calendar /></div>
+          </div>
 
+        </div>
       </div>
 
     </>
   )
 }
 
-export default HomePage;
+export default AttendencePage;

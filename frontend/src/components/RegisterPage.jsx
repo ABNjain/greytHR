@@ -10,6 +10,7 @@ function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
+  const [token, setToken] = useState('');
 
   const validate = () => {
     let formErrors = {};
@@ -92,76 +93,78 @@ function RegisterPage() {
       });
 
       if (response.ok) {
-        console.log('Registration successful!');
-        
+        const data = await response.json();
+        setToken(data.token);
+        localStorage.setItem('token', data.token); // Store the token in local storage
+        console.log('Registration successful!', data.token);
       } else {
-        console.error('Registration failed:', response.statusText);
-        
+        const errorData = await response.json();
+        console.error('Registration failed:', errorData.error);
+        setErrors({ ...errors, apiError: errorData.error });
       }
     } catch (error) {
       console.error('Error registering user:', error);
-      
+      setErrors({ ...errors, apiError: 'Internal Server Error' });
     }
   };
 
   return (
-    <>
-      <div className="loginpage bg-gray-600 h-screen text-black font-semibold">
-        <form className="form" onSubmit={handleSubmit}>
-          <h1 className='pt-2 text-3xl text-white'>Welcome to greytHR Portal</h1>
-          <div className='flex flex-col mt-2 items-center'>
-            <p className='text-xl text-orange-400'>Submit Your login Details</p>
-            <div className="details mt-2">
-              <h3>User Name</h3>
-              <input className='p-1 rounded-md' type="text" value={userName}
-                onChange={(e) => setUserName(e.target.value)}
-                required placeholder='abc' />
-              {errors.userName && <span className='text-red-500'>{errors.userName}</span>}
-              <h3>First Name</h3>
-              <input className='p-1 rounded-md' type="text" value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required placeholder='John' />
-              {errors.firstName && <span className='text-red-500'>{errors.firstName}</span>}
-              <h3 className='mt-2'>Last Name</h3>
-              <input className='p-1 rounded-md' type="text" value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-                required placeholder='Doe' />
-              {errors.lastName && <span className='text-red-500'>{errors.lastName}</span>}
-              <h3 className='mt-2'>Photo</h3>
-              <input className='p-1 rounded-md' type="file" value={userimage}
-                onChange={(e) => setUserImage(e.target.value)}
-                required placeholder='file.jpg' />
-              {errors.userimage && <span className='text-red-500'>{errors.userimage}</span>}
-              <h3 className='mt-2'>Date Of Birth</h3>
-              <input className='p-1 rounded-md' type="date" value={dob}
-                onChange={(e) => setDob(e.target.value)}
-                required placeholder='__/__/____' />
-              {errors.dob && <span className='text-red-500'>{errors.dob}</span>}
-              <h3 className='mt-2'>Age</h3>
-              <input className='p-1 rounded-md' type="number" value={age}
-                onChange={(e) => setAge(e.target.value)}
-                required placeholder='age' />
-              {errors.age && <span className='text-red-500'>{errors.age}</span>}
-              <h3 className='mt-2'>Email Address</h3>
-              <input className='p-1 rounded-md' type="email" value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required placeholder='example@gmail.com' />
-              {errors.email && <span className='text-red-500'>{errors.email}</span>}
-              <h3 className='mt-2'>Password</h3>
-              <input className='p-1 rounded-md' type="password" value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required placeholder='ex. JOhn4856@#%$*' />
-              {errors.password && <span className='text-red-500'>{errors.password}</span>}
-            </div>
-            <div className="buttons mt-5 flex gap-3">
-              <button type='submit' value="Create User" className='btn border-1 rounded-full p-1 w-20 bg-orange-400 text-white'>Register</button>
-              <div className='text-3xl text-white'>/</div>
-              <a href="/LoginPage" className='btn border-1 rounded-full p-1 w-20 bg-blue-400 text-white text-center'>Login ?</a>
-            </div>
+    <div className="loginpage bg-gray-600 h-screen text-black font-semibold">
+      <form className="form" onSubmit={handleSubmit}>
+        <h1 className='pt-2 text-3xl text-white'>Welcome to greytHR Portal</h1>
+        <div className='flex flex-col mt-2 items-center'>
+          <p className='text-xl text-orange-400'>Submit Your login Details</p>
+          <div className="details mt-2">
+            <h3>User Name</h3>
+            <input className='p-1 rounded-md' type="text" value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              required placeholder='abc' />
+            {errors.userName && <span className='text-red-500'>{errors.userName}</span>}
+            <h3>First Name</h3>
+            <input className='p-1 rounded-md' type="text" value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required placeholder='John' />
+            {errors.firstName && <span className='text-red-500'>{errors.firstName}</span>}
+            <h3 className='mt-2'>Last Name</h3>
+            <input className='p-1 rounded-md' type="text" value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required placeholder='Doe' />
+            {errors.lastName && <span className='text-red-500'>{errors.lastName}</span>}
+            <h3 className='mt-2'>Photo</h3>
+            <input className='p-1 rounded-md' type="file" value={userimage}
+              onChange={(e) => setUserImage(e.target.value)}
+              required placeholder='file.jpg' />
+            {errors.userimage && <span className='text-red-500'>{errors.userimage}</span>}
+            <h3 className='mt-2'>Date Of Birth</h3>
+            <input className='p-1 rounded-md' type="date" value={dob}
+              onChange={(e) => setDob(e.target.value)}
+              required placeholder='__/__/____' />
+            {errors.dob && <span className='text-red-500'>{errors.dob}</span>}
+            <h3 className='mt-2'>Age</h3>
+            <input className='p-1 rounded-md' type="number" value={age}
+              onChange={(e) => setAge(e.target.value)}
+              required placeholder='age' />
+            {errors.age && <span className='text-red-500'>{errors.age}</span>}
+            <h3 className='mt-2'>Email Address</h3>
+            <input className='p-1 rounded-md' type="email" value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required placeholder='example@gmail.com' />
+            {errors.email && <span className='text-red-500'>{errors.email}</span>}
+            <h3 className='mt-2'>Password</h3>
+            <input className='p-1 rounded-md' type="password" value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required placeholder='ex. JOhn4856@#%$*' />
+            {errors.password && <span className='text-red-500'>{errors.password}</span>}
           </div>
-        </form>
-      </div>
-    </>
+          {errors.apiError && <div className='text-red-500'>{errors.apiError}</div>}
+          <div className="buttons mt-5 flex gap-3">
+            <button type='submit' value="Create User" className='btn border-1 rounded-full p-1 w-20 bg-orange-400 text-white'>Register</button>
+            <div className='text-3xl text-white'>/</div>
+            <a href="/LoginPage" className='btn border-1 rounded-full p-1 w-20 bg-blue-400 text-white text-center'>Login ?</a>
+          </div>
+        </div>
+      </form>
+    </div>
   );
 }
 

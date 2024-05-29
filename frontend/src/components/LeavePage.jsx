@@ -1,4 +1,6 @@
 import React from 'react';
+import Calendar from './L-Calendar';
+
 import { IoHome } from "react-icons/io5";
 import { FaHandHoldingUsd } from "react-icons/fa";
 import { SlCalender } from "react-icons/sl";
@@ -11,22 +13,22 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-function HomePage() {
+function LeavePage() {
   return (
     <>
 
       <div className="loginpage bg-gray-600 m-0 p-0 font-semibold relative">
-        <h1 className='text-3xl text-white'>Welcome to greytHR Portal</h1>
-        <div className="container flex gap-1 h-screen w-full">
+        <h1 className='text-3xl text-white flex justify-center pt-5 h-20'>Welcome to greytHR Portal</h1>
+        <div className="container flex h-screen w-full">
           <div className="first bg-white w-60">
-            <div className="porfile bg-gray-100 text-black flex gap-1">
+            <div className="porfile bg-white text-black flex gap-1">
               <div className="logo text-3xl py-2"><FaUser /></div>
               <div className="profile-details">
                 <h3>Amit Dhurway</h3>
                 <a href="/view profile">View My Info</a>
               </div>
             </div>
-            <Menu as="div" className="relative inline-block text-left w-full text-black">
+            <Menu as="div" className="relative pt-5 inline-block text-left w-full text-black">
               <div>
                 <MenuButton className="inline-flex w-full justify-center gap-x-1.5 bg-white px-3 py-2 text-md font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                   Menu
@@ -114,7 +116,10 @@ function HomePage() {
             </Menu>
           </div>
 
-          <div className="Second bg-red-500 w-full">Second</div>
+          <div className="Second bg-white border border-x-2 w-full">
+            <h1 className='text-gray-700 text-3xl pt-4'>Leave Calendar</h1>
+            <div className="calender mt-3"><Calendar /></div>
+          </div>
         </div>
 
       </div>
@@ -123,4 +128,4 @@ function HomePage() {
   )
 }
 
-export default HomePage;
+export default LeavePage;

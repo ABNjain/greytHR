@@ -11,7 +11,7 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
-function HomePage() {
+function SalaryPage() {
   return (
     <>
 
@@ -123,4 +123,4 @@ function HomePage() {
   )
 }
 
-export default HomePage;
+export default SalaryPage;
